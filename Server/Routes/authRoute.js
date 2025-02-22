@@ -8,7 +8,7 @@ AuthRoute.post("/signup",signUp)
 AuthRoute.post("/login",logIn);
 AuthRoute.post("/logout", logOut);
 
-AuthRoute.post("/update-profile",protect,updateProfile);
+AuthRoute.patch("/update-profile",protect,updateProfile);
 
 
 
