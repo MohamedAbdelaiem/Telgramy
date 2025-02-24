@@ -8,7 +8,11 @@ AuthRoute.post("/signup",signUp)
 AuthRoute.post("/login",logIn);
 AuthRoute.post("/logout", logOut);
 
-AuthRoute.patch("/update-profile",protect,updateProfile);
+AuthRoute.put("/update-profile",protect,updateProfile);
+
+AuthRoute.get("/checkAuth",protect,(req,res)=>{
+    res.status(200).json({user:req.user});
+});
 
 
 

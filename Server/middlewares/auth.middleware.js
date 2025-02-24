@@ -24,9 +24,9 @@ export const protect = async (req, res, next) => {
             return res.status(401).json({ message: "The user belonging to this token does no longer exist" });
         }
         // 4) Check if the user changed the password after the token was issued
-        if (currentUser.changedPasswordAfter(decoded.iat)) {
-            return res.status(401).json({ message: "User recently changed password! Please log in again" });
-        }
+        // if (User.changedPasswordAfter(decoded.iat)) {
+        //     return res.status(401).json({ message: "User recently changed password! Please log in again" });
+        // }
         // GRANT ACCESS TO PROTECTED ROUTE
         req.user = currentUser;
         next();

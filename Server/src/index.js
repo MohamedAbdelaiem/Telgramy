@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import xss from "xss-clean";
 import helmet from "helmet";
+import cors from "cors";
 import rateLimit from "express-rate-limit";
 
 
@@ -18,8 +19,15 @@ import messageRoute from "../Routes/messgaeRoute.js";
 const app = express();
 
 //Middlewares
-app.use(express.json());
+app.use(express.json({
+  limit: "12mb",
+}));
 app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}
+));
 
 //Security
 // const limiter = rateLimit({

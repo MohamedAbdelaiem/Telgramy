@@ -1,5 +1,4 @@
-import express from "express";
-import jsonwebtoken from "jsonwebtoken";
+
 import bcryptjs from "bcryptjs";
 
 import User from "../models/userModel.js";
