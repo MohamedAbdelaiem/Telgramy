@@ -26,21 +26,10 @@ app.use(
 app.use(cookieParser());
 app.use(
   cors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        "https://tlgram-mohamedabdelaiems-projects.vercel.app",
-      ];
-      
-      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://tlgram-h24mlsbd2-mohamedabdelaiems-projects.vercel.app",
     credentials: true,
   })
 );
-
 
 //Security
 // const limiter = rateLimit({
