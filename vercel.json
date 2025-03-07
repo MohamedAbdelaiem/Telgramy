@@ -1,8 +1,11 @@
 {
     "version": 2,
-    "functions": {
-      "Server/src/index.js": { "runtime": "nodejs18.x" }
-    },
+    "builds": [
+      {
+        "src": "Server/src/index.js",
+        "use": "@vercel/node"
+      }
+    ],
     "rewrites": [
       {
         "source": "/api/(.*)",
