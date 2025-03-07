@@ -1,10 +1,10 @@
-import  useChatStore  from "../store/useChatStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import useChatStore from "../store/useChatStore";
+import useAuthStore from "../store/useAuthStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
-import  useAuthStore  from "../store/useAuthStore";
-// import { formatMessageTime } from "../lib/utils";
+import { formatMessageTime } from "../lib/utils";
 
 const ChatContainer = () => {
   const {
@@ -12,23 +12,43 @@ const ChatContainer = () => {
     getMessages,
     isMessagesLoading,
     selectedUser,
-    // subscribeToMessages,
-    // unsubscribeFromMessages,
+    subscribeToMessages,
+    unsubscribeToMessages,
   } = useChatStore();
-  const { authUser, isDarkMode } = useAuthStore();
+  const { AuthUser, isDarkMode } = useAuthStore();
+  console.log(AuthUser);
   const messageEndRef = useRef(null);
 
+  // 🔹 State to track selected image for preview
+  const [previewImage, setPreviewImage] = useState(null);
+
   useEffect(() => {
-    getMessages(selectedUser._id);
-    // subscribeToMessages();
-    // return () => unsubscribeFromMessages();
-  }, [selectedUser._id, getMessages]);
+    if(selectedUser?._id&&AuthUser?._id)
+    {
+      getMessages(selectedUser._id);
+    }
+    subscribeToMessages();
+    return () => unsubscribeToMessages();
+  }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeToMessages]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }, 100); 
     }
   }, [messages]);
+
+  // 🔹 Close preview when pressing ESC
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setPreviewImage(null);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   if (isMessagesLoading) {
     return (
@@ -45,7 +65,7 @@ const ChatContainer = () => {
       <ChatHeader />
       <div className={`flex-1 overflow-y-auto p-4 space-y-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
         {messages.map((message, index) => {
-          const isMyMessage = message.senderId === authUser._id;
+          const isMyMessage = message.senderId === AuthUser._id;
           const isLastMessage = index === messages.length - 1;
           
           return (
@@ -60,7 +80,7 @@ const ChatContainer = () => {
                     <img
                       src={
                         isMyMessage
-                          ? authUser.profilePic || "/avatar.png"
+                          ? AuthUser.profilePic || "/avatar.png"
                           : selectedUser.profilePic || "/avatar.png"
                       }
                       alt="profile pic"
@@ -81,11 +101,14 @@ const ChatContainer = () => {
                         : isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-800'
                     }`}
                   >
-                    {message.image && (
+                    {/* 🔹 Image preview on click */}
+                    {message.Image && (
                       <img
-                        src={message.image}
+                        src={message.Image}
                         alt="Attachment"
-                        className="sm:max-w-[200px] rounded-md mb-2"
+                        className="sm:max-w-[200px] rounded-md mb-2 cursor-pointer hover:opacity-80 transition"
+                        onClick={() => setPreviewImage(message.Image)}
+                        onLoad={() => messageEndRef.current?.scrollIntoView({ behavior: "smooth" })} 
                       />
                     )}
                     {message.text && <p>{message.text}</p>}
@@ -96,7 +119,30 @@ const ChatContainer = () => {
           );
         })}
       </div>
+
       <MessageInput />
+
+      {/* 🔹 Image Preview Modal */}
+      {previewImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setPreviewImage(null)}
+        >
+          <div className="relative p-4">
+            <img 
+              src={previewImage} 
+              alt="Preview"
+              className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg"
+            />
+            <button 
+              className="absolute top-2 right-2 text-white text-2xl bg-gray-700 rounded-full px-2"
+              onClick={() => setPreviewImage(null)}
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

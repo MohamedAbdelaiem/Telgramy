@@ -25,6 +25,11 @@ const MessageInput = () => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
+
+    reader.onload=async()=>{
+        const base64Image = reader.result;
+        setImagePreview(base64Image);
+    };
   };
 
   const removeImage = () => {

@@ -4,6 +4,7 @@ import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 
 const Navbar = () => {
   const { logout, AuthUser } = useAuthStore();
+  
 
   return (
     <header className="bg-white border-b border-gray-200 fixed w-full top-0 z-40 backdrop-blur-lg bg-opacity-80 shadow-sm mb-[5px]">

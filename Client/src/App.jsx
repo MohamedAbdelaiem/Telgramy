@@ -14,8 +14,10 @@ import HomePage from "./pages/Home";
 // import Signup from "./pages/Signup";
 // import Login from "./pages/Login";
 function App() {
-  const {AuthUser,checkAuth,ischeckingAuth} = useAuthStore();
+  const {AuthUser,checkAuth,ischeckingAuth,onlineUsers} = useAuthStore();
   console.log(AuthUser);
+  console.log(onlineUsers);
+
   useEffect(()=>{
     checkAuth();
   },[checkAuth]);

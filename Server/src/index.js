@@ -6,6 +6,8 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 
+import {app,server} from "../LIB/socket.js";
+
 
 
 
@@ -16,7 +18,7 @@ import { connect } from "../LIB/db.js";
 //Routes
 import AuthRoute from "../Routes/authRoute.js";
 import messageRoute from "../Routes/messgaeRoute.js";
-const app = express();
+
 
 //Middlewares
 app.use(express.json({
@@ -45,7 +47,7 @@ app.use("/api/message", messageRoute);
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connect();
   console.log("Server is running on port " + PORT);
 });

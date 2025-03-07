@@ -149,7 +149,7 @@ export const updateProfile = async (req, res) => {
     if (profilePic) {
       if (user.profilePic) {
         // Extract the Cloudinary public ID from the URL
-        const publicId = user.profilePic.split("/").pop().split(".")[0];
+        const publicId = `chat_images/${image.name.split('.')[0]}`;
         await cloudinary.uploader.destroy(publicId);
       }
       

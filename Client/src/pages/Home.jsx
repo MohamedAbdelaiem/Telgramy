@@ -9,7 +9,6 @@ import ChatContainer from '../components/ChatContainer';
 function HomePage() {
     const { selectedUser } = useChatStore();
     const { isDarkMode } = useAuthStore();
-    console.log("Home");
     return (
       <div className={`h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
         <div className="flex items-center justify-center pt-20 px-4">
