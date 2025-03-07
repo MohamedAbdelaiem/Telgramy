@@ -6,11 +6,9 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 
-import {app,server} from "../LIB/socket.js";
+import { app, server } from "../LIB/socket.js";
 
-
-
-
+import path from "path";
 
 //dataBase
 import { connect } from "../LIB/db.js";
@@ -19,17 +17,19 @@ import { connect } from "../LIB/db.js";
 import AuthRoute from "../Routes/authRoute.js";
 import messageRoute from "../Routes/messgaeRoute.js";
 
-
 //Middlewares
-app.use(express.json({
-  limit: "12mb",
-}));
+app.use(
+  express.json({
+    limit: "12mb",
+  })
+);
 app.use(cookieParser());
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}
-));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 //Security
 // const limiter = rateLimit({
@@ -46,6 +46,14 @@ app.use("/api/message", messageRoute);
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../Client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../Client", "dist", "index.html"));
+  });
+}
 
 server.listen(PORT, () => {
   connect();

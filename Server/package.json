@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "mongoose": "^8.10.1",
     "nodemon": "^3.1.9",
     "socket.io": "^4.8.1",
+    "tlgram": "file:..",
     "xss": "^1.0.15",
     "xss-clean": "^0.1.4"
   }
