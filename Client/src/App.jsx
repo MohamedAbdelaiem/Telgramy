@@ -8,7 +8,7 @@ import Signup from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import { Toaster } from "react-hot-toast";
-// import Home from "./pages/Home";
+import HomePage from "./pages/Home";
 // import Profile from "./pages/Profile";
 // import Settings from "./pages/Settings";
 // import Signup from "./pages/Signup";
@@ -31,7 +31,7 @@ function App() {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={AuthUser?<Home />:<Navigate to ="/login"></Navigate>} />
+        <Route path="/" element={AuthUser?<HomePage />:<Navigate to ="/login"></Navigate>} />
         <Route path="/signup" element={!AuthUser? <Signup/>:<Navigate to ="/"></Navigate>} />
         <Route path="/login" element={!AuthUser ? <Login/> : <Navigate to ="/"></Navigate>} />
         <Route path="/settings" element={AuthUser? <Settings/>:<Navigate to ="/"></Navigate>} />

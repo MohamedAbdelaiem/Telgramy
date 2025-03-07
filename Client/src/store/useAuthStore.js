@@ -10,6 +10,7 @@ const useAuthStore = create((set) => ({
     isUpdatingProfile: false,
     ischeckingAuth: true,
     isDarkMode:false,
+    onlineUsers:[],
 
     checkAuth: async()=>{
         try{
