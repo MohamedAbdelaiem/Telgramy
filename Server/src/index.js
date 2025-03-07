@@ -26,10 +26,21 @@ app.use(
 app.use(cookieParser());
 app.use(
   cors({
-    origin:process.env.NODE_ENV === "production" ? undefined : "http://localhost:5173",
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "https://tlgram-mohamedabdelaiems-projects.vercel.app",
+      ];
+      
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 
 //Security
 // const limiter = rateLimit({
