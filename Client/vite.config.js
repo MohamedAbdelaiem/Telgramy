@@ -8,7 +8,7 @@ export default defineConfig({
   ],
 
   optimizeDeps: {
-    exclude: ['express']
+    exclude: ['express',"react-hot-toast"]
   }
 
 });
