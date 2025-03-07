@@ -26,7 +26,7 @@ app.use(
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://tlgram-mohamedabdelaiem-mohamedabdelaiems-projects.vercel.app  ",
+    origin: "https://tlgram-mohamedabdelaiem-mohamedabdelaiems-projects.vercel.app/",
     credentials: true,
   })
 );
