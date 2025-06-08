@@ -3,6 +3,7 @@
 **Telgramy** is a modern, full-stack realtime chat application built with powerful technologies. Users can chat in realtime, switch between light and dark themes, update their profile picture, and see a live list of online users with filter capabilities.
 
 ---
+[![Watch the video](assests/demo.png)](https://youtu.be/dFFcf0FqS5A)
 
 ## 🔥 Features
 
